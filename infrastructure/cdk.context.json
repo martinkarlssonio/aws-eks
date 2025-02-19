@@ -1,0 +1,8 @@
+{
+  "availability-zones:account=311141548650:region=eu-north-1": [
+    "eu-north-1a",
+    "eu-north-1b",
+    "eu-north-1c"
+  ],
+  "ami:account=311141548650:filters.image-type.0=machine:filters.name.0=amazon-eks-gpu-node-1.*:filters.state.0=available:owners.0=amazon:region=eu-north-1": "ami-08b337e0945038ec4"
+}
