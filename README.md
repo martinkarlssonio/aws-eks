@@ -5,6 +5,8 @@ This AWS CDK project deploys an Amazon Elastic Kubernetes Service (EKS) cluster 
 1. **Infrastructure Base** - Sets up foundational infrastructure, including an Amazon Elastic Container Registry (ECR).
 2. **Infrastructure** - Deploys an EKS cluster with GPU-enabled nodes, IAM roles, namespaces, and workloads.
 
+<img src="k8s_serverless.png">
+
 ## Prerequisites
 
 Ensure you have the following installed before proceeding:
