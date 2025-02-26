@@ -69,13 +69,10 @@ This step creates an EKS cluster, GPU node group, IAM roles, Kubernetes namespac
 - **Amazon EC2 GPU Node Group** - Uses `g4dn.xlarge` instances for GPU workloads.
 - **IAM Roles** - Roles for worker nodes and cluster management.
 - **Kubernetes Namespaces**:
-  - `<SRE_NAMESPACE>` - For Site Reliability Engineering.
-  - `<PORTAL_NAMESPACE>` - Hosts the portal application.
   - `<DATAPLATFORM_NAMESPACE>` - For AI and data services.
 - **Kubernetes Workloads**:
   - **Metrics Server** - Provides resource utilization metrics.
   - **NVIDIA Device Plugin** - Enables GPU support in Kubernetes.
-  - **Portal Service** - Web application running in `<PORTAL_NAMESPACE>`.
   - **Dataplatform Service** - AI-powered data platform using GPU resources.
 
 ## Post-Deployment Verification
@@ -118,7 +115,7 @@ This step creates an EKS cluster, GPU node group, IAM roles, Kubernetes namespac
    ```sh
    kubectl describe nodes
    ```
-9. Configure GPU access for Pods (Nvidia):
+9. Manually configure GPU access for Pods (not needed, handled via CDK):
    ```sh
    kubectl apply -f https://raw.githubusercontent.com/NVIDIA/k8s-device-plugin/v0.13.0/nvidia-device-plugin.yml
    kubectl get pods -n kube-system | grep nvidia
