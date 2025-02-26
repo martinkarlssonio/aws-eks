@@ -250,7 +250,7 @@ class InfrastructureStack(Stack):
                             "containers": [
                                 {
                                     "name": "dataplatform-ai",
-                                    "image": f"{ecr_repository_uri}:dataplatform-genai-v1",
+                                    "image": f"{ecr_repository_uri}:dataplatform-genai-v1", # This image needs to be pushed to ECR before deploying
                                     "ports": [{"containerPort": 8010}],
                                     "resources": {
                                         "requests": {"cpu": "3000m", "memory": "8Gi", "nvidia.com/gpu": 1},
