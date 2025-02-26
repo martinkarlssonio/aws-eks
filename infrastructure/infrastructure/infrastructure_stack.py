@@ -200,7 +200,6 @@ class InfrastructureStack(Stack):
                 }
             }
         )
-        # nvidia_plugin.node.add_dependency(cluster)
 
         #################################################
         ################ KUEBCTL ADMIN ##################
@@ -212,89 +211,6 @@ class InfrastructureStack(Stack):
             ),
             groups=["system:masters"]
         )
-
-        #################################################
-        ################### SRE RESOURCES ###############
-        #################################################
-
-        sre_namespace = cluster.add_manifest(
-            "SreNamespace",
-            {
-                "apiVersion": "v1", 
-                "kind": "Namespace", 
-                "metadata": {
-                "name": "sre"
-              }
-            }
-        )
-
-        #################################################
-        ################ PORTAL RESOURCES ###############
-        #################################################
-
-        portal_namespace = cluster.add_manifest(
-            "PortalNamespace",
-            {
-                "apiVersion": "v1", 
-                "kind": "Namespace", 
-                "metadata": {
-                 "name": "portal"
-                }
-            }
-        )
-
-        portal_deployment = cluster.add_manifest(
-            "PortalDeployment",
-            {
-                "apiVersion": "apps/v1",
-                "kind": "Deployment",
-                "metadata": {"name": "portal", "namespace": "portal"},
-                "spec": {
-                    "replicas": 1,
-                    "strategy": {
-                        "type": "RollingUpdate",
-                        "rollingUpdate": {
-                            "maxUnavailable": 1, 
-                            "maxSurge": 0
-                        }
-                    },
-                    "selector": {"matchLabels": {"app": "portal"}},
-                    "template": {
-                        "metadata": {"labels": {"app": "portal"}},
-                        "spec": {
-                            "containers": [
-                                {
-                                    "name": "portal",
-                                    "image": f"{ecr_repository_uri}:portal-ui-v1",
-                                    "ports": [{"containerPort": 8000}],
-                                    "resources": {
-                                        "requests": {"cpu": "500m", "memory": "512Mi"},
-                                        "limits": {"cpu": "1000m", "memory": "1Gi"}
-                                    }
-                                }
-                            ]
-                        },
-                    },
-                },
-            },
-        )
-
-        portal_service = cluster.add_manifest(
-            "PortalService",
-            {
-                "apiVersion": "v1",
-                "kind": "Service",
-                "metadata": {"name": "portal", "namespace": "portal"},
-                "spec": {
-                    "type": "LoadBalancer",
-                    "ports": [{"port": 8000, "targetPort": 8000}],
-                    "selector": {"app": "portal"},
-                },
-            },
-        )
-
-        portal_deployment.node.add_dependency(portal_namespace)
-        portal_service.node.add_dependency(portal_deployment)
 
         #################################################
         ########### DATAPLATFORM RESOURCES ##############
